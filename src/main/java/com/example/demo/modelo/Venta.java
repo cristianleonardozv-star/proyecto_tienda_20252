@@ -9,15 +9,15 @@ public class Venta {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private LocalDate fecha;
     private Double total;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_documento")
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductoVenta> productosVenta;
+   /* @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductoVenta> productosVenta;*/
 }

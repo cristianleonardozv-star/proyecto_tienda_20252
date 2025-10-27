@@ -14,7 +14,7 @@ public class Cliente {
 	    private LocalDate fechaNacimiento;
 	    private String email;
 
-	    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-	    private List<Venta> ventas;
+	    /*@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+	    private List<Venta> ventas;*/
 
 }

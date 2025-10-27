@@ -1,16 +1,18 @@
 package com.example.demo.controller;
+
+
+import org.springframework.web.bind.annotation.*;
+
 import com.example.demo.modelo.Venta;
+import com.example.demo.repository.VentaRepository;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.example.demo.repository.VentaRepository;
-
+@RestController
+@RequestMapping("/ventas")
 public class VentaController {
-	private final VentaRepository ventaRepository;
+
+    private final VentaRepository ventaRepository;
 
     public VentaController(VentaRepository ventaRepository) {
         this.ventaRepository = ventaRepository;
@@ -21,8 +23,24 @@ public class VentaController {
         return ventaRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Venta obtener(@PathVariable Integer id) {
+        return ventaRepository.findById(id).orElse(null);
+    }
+
     @PostMapping
-    public Venta guardar(@RequestBody Venta venta) {
+    public Venta crear(@RequestBody Venta venta) {
         return ventaRepository.save(venta);
+    }
+
+    @PutMapping("/{id}")
+    public Venta actualizar(@PathVariable Integer id, @RequestBody Venta venta) {
+        venta.setId(id);
+        return ventaRepository.save(venta);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id) {
+        ventaRepository.deleteById(id);
     }
 }

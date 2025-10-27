@@ -1,28 +1,46 @@
 package com.example.demo.controller;
+
+
+import org.springframework.web.bind.annotation.*;
+
 import com.example.demo.modelo.Cliente;
+import com.example.demo.repository.ClienteRepository;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.example.demo.repository.ClienteRepository;
-
+@RestController
+@RequestMapping("/clientes")
 public class ClienteController {
-	 private final ClienteRepository clienteRepository;
 
-	    public ClienteController(ClienteRepository clienteRepository) {
-	        this.clienteRepository = clienteRepository;
-	    }
+    private final ClienteRepository clienteRepository;
 
-	    @GetMapping
-	    public List<Cliente> listar() {
-	        return clienteRepository.findAll();
-	    }
+    public ClienteController(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
 
-	    @PostMapping
-	    public Cliente guardar(@RequestBody Cliente cliente) {
-	        return clienteRepository.save(cliente);
-	    }
+    @GetMapping
+    public List<Cliente> listar() {
+        return clienteRepository.findAll();
+    }
+
+    @GetMapping("/{documento}")
+    public Cliente obtener(@PathVariable String documento) {
+        return clienteRepository.findById(documento).orElse(null);
+    }
+
+    @PostMapping
+    public Cliente crear(@RequestBody Cliente cliente) {
+        return clienteRepository.save(cliente);
+    }
+
+    @PutMapping("/{documento}")
+    public Cliente actualizar(@PathVariable String documento, @RequestBody Cliente cliente) {
+        cliente.setDocumento(documento);
+        return clienteRepository.save(cliente);
+    }
+
+    @DeleteMapping("/{documento}")
+    public void eliminar(@PathVariable String documento) {
+        clienteRepository.deleteById(documento);
+    }
 }

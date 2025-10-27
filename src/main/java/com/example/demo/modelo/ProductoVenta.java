@@ -1,21 +1,30 @@
 package com.example.demo.modelo;
+
 import jakarta.persistence.*;
 import lombok.*;
+import java.math.BigDecimal;
+
 @Entity
+@Table(name = "producto_venta")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ProductoVenta {
-	 @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long id;
 
-	    @ManyToOne(fetch = FetchType.LAZY)
-	    @JoinColumn(name = "venta_id")
-	    private Venta venta;
+    @EmbeddedId
+    private ProductoVentaId id;
 
-	    @ManyToOne(fetch = FetchType.LAZY)
-	    @JoinColumn(name = "producto_id")
-	    private Producto producto;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("ventaId")  // 👈 usa el mismo nombre que en ProductoVentaId
+    @JoinColumn(name = "venta_id")
+    private Venta venta;
 
-	    private Integer cantidad;
-	    private Double precio;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("productoId")  // 👈 igual que en ProductoVentaId
+    @JoinColumn(name = "producto_id")
+    private Producto producto;
+
+    private Integer cantidad;
+    private BigDecimal precio;
 }
