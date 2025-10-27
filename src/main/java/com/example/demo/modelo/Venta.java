@@ -18,6 +18,6 @@ public class Venta {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-   /* @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductoVenta> productosVenta;*/
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductoVenta> productos;
 }

@@ -26,5 +26,5 @@ public class ProductoVenta {
     private Producto producto;
 
     private Integer cantidad;
-    private BigDecimal precio;
+    private Double precio;
 }
